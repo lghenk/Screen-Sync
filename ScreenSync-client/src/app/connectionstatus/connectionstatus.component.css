@@ -1,0 +1,25 @@
+.connectStatus {
+    background: rgba(147, 147, 147, 0.30);
+    color: white;
+
+    position:fixed;
+    bottom:0px;
+    right:10px;
+    margin:0px;
+    padding: 10px;
+    min-width: 200px;
+    font-size: 15px;
+}
+
+.connectStatus .status {
+    font-size: 25px;
+    text-align: center;
+}
+
+.online {
+    color: rgb(25, 255, 0);
+}
+
+.offline {
+    color: red;
+}

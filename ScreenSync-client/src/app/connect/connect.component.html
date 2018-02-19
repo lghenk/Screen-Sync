@@ -1,0 +1,21 @@
+<div class="h-100 row align-items-center">
+  <div class="col-md-6 offset-md-3">
+    <div class="card square" >
+      <div class="card-body">
+        <div class="row">
+          <div class="col-md-10">
+            <div class="form-group">
+              <input type="text" class="form-control square" [(ngModel)]="Address" placeholder="Enter Address (like 127.0.0.1:3000)">
+            </div>
+          </div>
+
+          <div class="col-md-2">
+            <button type="button" (click)="Connect();" class="btn btn-success btn-block square">Connect</button>
+          </div>
+
+          <button type="button" (click)="Address = '127.0.0.1:3000'; Connect();" class="btn btn-link btn-block square">Connect Local 3000</button>
+        </div>      
+      </div>
+    </div>
+  </div>
+</div>

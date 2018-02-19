@@ -1,0 +1,70 @@
+{
+  "project": {
+    "name": "screen-sync",
+    "ejected": true
+  },
+  "apps": [
+    {
+      "root": "src",
+      "outDir": "dist",
+      "assets": [
+        "assets",
+        "favicon.ico",
+        "node_modules"
+      ],
+      "index": "index.html",
+      "main": "main.ts",
+      "polyfills": "polyfills.ts",
+      "test": "test.ts",
+      "tsconfig": "tsconfig.json",
+      "testTsconfig": "tsconfig.json",
+      "prefix": "app",
+      "styles": [
+        "styles.css"
+      ],
+      "scripts": [
+        "./assets/js/timeline/timelineitem.js",
+        "./assets/js/timeline/timeline.js",
+        "./assets/js/timeline/main.js",
+        "./../node_modules/socket.io-client/dist/socket.io.slim.js",
+        "./../node_modules/socket.io-stream/socket.io-stream.js"
+      ],
+      "environmentSource": "environments/environment.ts",
+      "environments": {
+        "dev": "environments/environment.ts",
+        "prod": "environments/environment.prod.ts"
+      }
+    }
+  ],
+  "e2e": {
+    "protractor": {
+      "config": "./protractor.conf.js"
+    }
+  },
+  "lint": [
+    {
+      "files": "src/**/*.ts",
+      "project": "src/tsconfig.json"
+    },
+    {
+      "files": "e2e/**/*.ts",
+      "project": "e2e/tsconfig.json"
+    }
+  ],
+  "test": {
+    "karma": {
+      "config": "./karma.conf.js"
+    }
+  },
+  "defaults": {
+    "styleExt": "css",
+    "class": {
+      "spec": false
+    },
+    "component": {
+      "spec": true,
+      "inlineStyle": false,
+      "inlineTemplate": false
+    }
+  }
+}

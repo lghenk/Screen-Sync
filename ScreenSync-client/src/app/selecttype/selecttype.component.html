@@ -1,0 +1,173 @@
+<div class="h-100 row align-items-center">
+  <ng-container *ngIf="!isController && !isInterface">
+    <div class="col-md-6 offset-md-3">
+      <div class="row">
+          <div class="col-md-6">
+            <div (click)="SetupController();" class="button">
+              Controller
+            </div>
+          </div>
+        
+          <div class="col-md-6">
+            <div (click)="RequestInterfaces();" class="button">
+              Interface
+            </div>
+          </div>
+      </div>
+    </div>
+  </ng-container>
+
+  <ng-container *ngIf="isInterface">
+    <div *ngIf="!interfaceData.receivedManifest" class="waitingForController col-md-12">
+      Waiting For Controller Manifest
+    </div>
+
+    <div *ngIf="interfaceData.receivedManifest" class="col-md-6 offset-md-3" style="text-align: center;">
+      <h2 style="color:white;">Select Interface</h2>
+      <ng-container *ngIf="generateArray(interfaceData).length > 0">
+        <div class="row" *ngFor="let interface of generateArray(interfaceData.manifest)">
+          <div class="col-md-8" style="color:white">
+            {{ interface.key }}
+          </div>
+      
+          <div class="col-md-4">
+            <button type="button" class="square btn-block btn btn-success" *ngIf="!SelectedInterface(interface)" (click)="SelectInterface(interface)">Select Interface</button>
+            <button type="button" class="square btn-block btn btn-default" *ngIf="SelectedInterface(interface)" (click)="SelectInterface(interface)">Selected</button>
+          </div>
+        </div>
+      </ng-container>
+      
+      <br>
+      <div class="row">
+        <div class="col-md-12">
+          <button type="button" *ngIf="!FileService.IsDownloading()" class="square btn-info btn btn-block" (click)="InterfaceFiles()">Continue To Dashboard (or download files)</button>
+          <button type="button" *ngIf="FileService.IsDownloading()" class="square btn-info btn btn-block" disabled>Downloading Files...</button>
+        </div>
+      </div>
+
+      <div class="row" *ngIf="FileService.IsDownloading()" style="text-align: center; color: white;">
+        <div class="col-md-12">
+          <hr>
+          <h5 style="color:white;">Downloading Files</h5>
+          <table class="table">
+            <thead>
+              <tr>
+                <th scope="col">Name</th>
+                <th scope="col">Progress</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let interface of generateArray(FileService.downloadStatus)">
+                <th>{{ interface.key }}</th>
+                <td>{{ interface.value.progress }}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </ng-container>
+
+  <ng-container *ngIf="isController">
+    <input id="selectDirectory" (change)="SelectedCreateProjectDirectory($event);" webkitdirectory type="file" style="display: none" />
+    <input id="selectManifest" (change)="SelectedCreateProjectManifest($event);" accept=".json" type="file" style="display: none" />
+    <div class="col-md-6 offset-md-3" *ngIf="!createInterfaces && !showInterfaces" style="text-align: center;">
+      <h2 style="color:white;">Create or open a project</h2>
+      <div class="row">
+        <div class="col-md-6">
+          <div (click)="InitCreateProject();" class="button">
+            Create Project
+          </div>
+        </div>
+    
+        <div class="col-md-6">
+          <div (click)="InitLoadProject();" class="button">
+            Load Project
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <div class="col-md-6 offset-md-3" *ngIf="createInterfaces"  style="text-align: center;">
+      <h2 style="color:white;">Create interfaces</h2>
+      <ng-container *ngIf="generateArray(interfaceData).length > 0">
+        <div class="row" *ngFor="let interface of generateArray(interfaceData)">
+          <div class="col-md-8" style="color:white">
+            {{ interface.key }}
+          </div>
+      
+          <div class="col-md-4">
+            <button type="button" class="square btn-block btn btn-danger" (click)="DeleteInterface(interface.key)">Delete Interface</button>
+          </div>
+        </div>
+      </ng-container>
+
+      <br>
+      <div class="row">
+        <div class="col-md-8">
+          <div class="form-group">
+            <input type="text" class="form-control square" id="createInterfaceName" placeholder="Enter The Name Of The Interface Here">
+            <div class="invalid-feedback" *ngIf="errorCreate">
+              {{ errorMessage }}
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-4">
+          <button type="button" class="square btn-block btn btn-success" (click)="CreateInterface()">Add Interface</button>
+        </div>
+
+        <div class="col-md-12">
+          <button type="button" class="square btn-info btn btn-block" (click)="CreateProject()">Create Project</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-6 offset-md-3" *ngIf="showInterfaces" style="text-align: center; color: white">
+      <h2 style="color:white;">All Interfaces</h2>
+      <ng-container *ngIf="generateArray(interfaceData).length > 0">
+        <table class="table">
+          <thead>
+            <tr>
+              <th scope="col">Name</th>
+              <th scope="col">Connections</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let interface of generateArray(interfaceConnections)">
+              <th>{{ interface.key }}</th>
+              <td>{{ interface.value }}</td>
+            </tr>
+          </tbody>
+        </table>
+      </ng-container>
+    
+      <div class="row" *ngIf="!IsUploading()">
+        <div class="col-md-12">
+          <button type="button" (click)="router.navigate(['/control/dashboard'])" class="square btn-info btn btn-block">Continue to Dashboard</button>
+        </div>
+      </div>
+
+      <div class="row" *ngIf="IsUploading()" style="text-align: center; color: white;">
+        <div class="col-md-12">
+          <hr>
+          <h5 style="color:white;">Uploading Files To Server</h5>
+          <table class="table">
+            <thead>
+              <tr>
+                <th scope="col">Name</th>
+                <th scope="col">Progress</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let interface of generateArray(FileService.uploadStatus)">
+                <th>{{ interface.key }}</th>
+                <td>{{ interface.value }}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </ng-container>
+</div>

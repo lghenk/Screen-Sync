@@ -1,0 +1,18 @@
+{
+  "name": "screensync-server",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "delivery": "0.0.6",
+    "express": "^4.16.2",
+    "js-sha1": "^0.6.0",
+    "socket.io": "^2.0.4",
+    "socket.io-stream": "^0.9.1"
+  }
+}

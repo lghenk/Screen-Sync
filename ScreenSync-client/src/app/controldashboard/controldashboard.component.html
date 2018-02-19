@@ -1,0 +1,87 @@
+<div class="containter-fluid wrapper">
+  <div class="row">
+    <div class="col-md-6">
+      <div class="row">
+        <div class="col-md-4 ">
+          <div class="list-thing">
+            <div class="list-group file-type-list">
+              <button type="button" data-toggle="list" href="#video" role="tab" class="square list-group-item list-group-item-action active">Video Files</button>
+              <button type="button" data-toggle="list" href="#image" role="tab" class="square list-group-item list-group-item-action">Image Files</button>
+              <button type="button" data-toggle="list" href="#audio" role="tab" class="square list-group-item list-group-item-action">Audio Files</button>
+              <button type="button" data-toggle="list" href="#misc" role="tab" class="square list-group-item list-group-item-action">Misc</button>
+              <button type="button" data-toggle="list" href="#controls" role="tab" class="square list-group-item list-group-item-action">Controls</button>
+              <button type="button" (click)="ngOnInit()" class="square list-group-item list-group-item-action">Refresh Files</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-8">
+          <div class="tab-content">
+            <div class="tab-pane active list-thing" id="video" role="tabpanel">
+              <div class="list-group file-type-list">
+                <button *ngFor="let file of generateArray(files['video']); trackBy:trackByIndex" type="button" class="square list-group-item d-flex justify-content-between align-items-center">
+                  {{ file.value.file }}
+                  <span class="badge badge-default badge-pill">
+                    <div class="btn-group">
+                      <button type="button" class="btn btn-info btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Add To Timeline For
+                      </button>
+                      <div class="dropdown-menu">
+                        <button *ngFor="let interface of generateArray(manifest); trackBy:trackByIndex" class="dropdown-item" (click)="AddToTimeline(interface, file)">Interface {{ interface.key }}</button>
+                      </div>
+                    </div>
+                  </span>
+                </button>
+              </div>
+            </div>
+            <div class="tab-pane" id="image" role="tabpanel">
+              <div class="list-group file-type-list">
+                <button type="button" class="square list-group-item list-group-item-action">Image #1</button>
+                <button type="button" class="square list-group-item list-group-item-action">Image #2</button>
+                <button type="button" class="square list-group-item list-group-item-action">Image #3</button>
+                <button type="button" class="square list-group-item list-group-item-action">Image #4</button>
+                <button type="button" class="square list-group-item list-group-item-action">Image #5</button>
+              </div>
+            </div>
+            <div class="tab-pane" id="audio" role="tabpanel">
+              <div class="list-group file-type-list">
+                <button *ngFor="let file of generateArray(files['audio']); trackBy:trackByIndex" type="button" class="square list-group-item d-flex justify-content-between align-items-center">
+                  {{ file.value.file }}
+                  <span class="badge badge-default badge-pill">
+                    <div class="btn-group">
+                      <button type="button" class="btn btn-info btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Add To Timeline For
+                      </button>
+                      <div class="dropdown-menu">
+                        <button *ngFor="let interface of generateArray(manifest); trackBy:trackByIndex" class="dropdown-item" (click)="AddToTimeline(interface, file)">Interface {{ interface.key }}</button>
+                      </div>
+                    </div>
+                  </span>
+                </button>
+              </div>
+            </div>
+            <div class="tab-pane" id="misc" role="tabpanel">
+              <div class="list-group file-type-list">
+                <button type="button" class="square list-group-item list-group-item-action">Misc #1</button>
+                <button type="button" class="square list-group-item list-group-item-action">Misc #2</button>
+                <button type="button" class="square list-group-item list-group-item-action">Misc #3</button>
+                <button type="button" class="square list-group-item list-group-item-action">Misc #4</button>
+                <button type="button" class="square list-group-item list-group-item-action">Misc #5</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-6">
+      Video/Image/Effects of timeline example here
+    </div>
+  </div>
+  <div id="TimelineWrapper">
+    <canvas id="Timeline"></canvas>
+  </div>
+</div>
+
+<video id="video-metadata" src="" style="display: none"></video>
+<audio id="audio-metadata" src="" style="display: none"></audio>
